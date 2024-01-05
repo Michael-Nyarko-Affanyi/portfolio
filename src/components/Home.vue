@@ -45,9 +45,27 @@ class Particle {
                 ctx: null,
                 particlesArray: [],
                 numberOfParticles: 1000,
+                greeting: "Hello I'm Mikael👋🏻",
+                subGreeting: "I'm a full-stack developer"
             }
         },
         methods: {
+            wait(ms) { 
+                return new Promise(resolve => setTimeout(resolve, ms))
+            },
+            greet() {
+                const greetingText = this.$refs.greeting
+                let i = 0
+                const type = async () => {
+                    if (i < this.greeting.length) {
+                        greetingText.innerText = this.greeting.substring(0, i + 1)
+                        i++
+                        await this.wait(100)
+                        type()
+                    }
+                }
+                type()
+            },
             init() {
                 for (let i = 0; i < this.numberOfParticles; i++) {
                     this.particlesArray.push(new Particle(this.canvas, this.ctx))
@@ -70,6 +88,7 @@ class Particle {
 
             this.init()
             this.animate()
+            this.greet()
         },
     })
 </script>
@@ -77,7 +96,7 @@ class Particle {
 <template>
     <canvas ref="canvas"></canvas>
     <div class="container w-screen h-screen bg-gray-900 flex items-center justify-center text-green-700 overflow-hidden">
-      <h1>Hello I'm Mikael</h1>
+      <h1 ref="greeting"></h1><span id="blinker">|</span>
     </div>
 </template>
 
@@ -98,4 +117,21 @@ class Particle {
         width: 100%;
         height: 100%;
     }
+
+    #blinker {
+        animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
 </style>
