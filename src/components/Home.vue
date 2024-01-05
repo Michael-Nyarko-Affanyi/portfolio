@@ -49,7 +49,6 @@ class Particle {
         },
         methods: {
             init() {
-                //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
                 for (let i = 0; i < this.numberOfParticles; i++) {
                     this.particlesArray.push(new Particle(this.canvas, this.ctx))
                 }
